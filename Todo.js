@@ -1,39 +1,33 @@
-let button = document.getElementById('add')
-let todoList = document.getElementById('todoList')
-let input = document.getElementById('input');
-//local storage,cookies
-let todos = [];
-window.onload = ()=>{
-    todos = JSON.parse(localStorage.getItem('todos')) || []
-    todos.forEach(todo=>addtodo(todo))
-}
+document.querySelector('#push').onclick = function(){
+    if(document.querySelector('#newtask input').value.length == 0){
+        alert("Please Enter a Task")
+    }
+    else{
+        document.querySelector('#tasks').innerHTML += `
+            <div class="task">
+                <span id="taskname">
+                    ${document.querySelector('#newtask input').value}
+                </span>
+                <button class="delete">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            </div>
+        `;
 
-button.addEventListener('click',()=>{
-    todos.push(input.value)
-    localStorage.setItem('todos',JSON.stringify(todos))
-    addtodo(input.value)
-    input.value=''
-})
+        var current_tasks = document.querySelectorAll(".delete");
+        for(var i=0; i<current_tasks.length; i++){
+            current_tasks[i].onclick = function(){
+                this.parentNode.remove();
+            }
+        }
 
-function addtodo(todo){
-    let para = document.createElement('p');
-    para.innerText = todo;
-    todoList.appendChild(para)
-    
-    para.addEventListener('click',()=>{
-        para.style.textDecoration = 'line-through'
-        remove(todo)
-    })
-    para.addEventListener('dblclick',()=>{
-        todoList.removeChild(para)
-        remove(todo)
-    })
-}
+        var tasks = document.querySelectorAll(".task");
+        for(var i=0; i<tasks.length; i++){
+            tasks[i].onclick = function(){
+                this.classList.toggle('completed');
+            }
+        }
 
-function remove(todo){
-    let index = todos.indexOf(todo)
-    if (index > -1) {
-        todos.splice(index, 1);
-      }
-    localStorage.setItem('todos',JSON.stringify(todos))
+        document.querySelector("#newtask input").value = "";
+    }
 }

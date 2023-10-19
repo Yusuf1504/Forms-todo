@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Td List</title>
+    <title>Simple To Do List</title>
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!--Font Awesome CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!--Stylesheet-->
+    <link rel="stylesheet" href="Todo.css">
 </head>
 <body>
-    <div id="wrapper">
-        <h2>Todo List</h2>
-        <input type="text" id="input">
-        <button id="add">Add</button>
-        <div id="todoList">
-
+    <div class="container">
+        <div id="newtask">
+            <input type="text" placeholder="Task to be done..">
+            <button id="push">Add</button>
         </div>
+        <div id="tasks"></div>
     </div>
+    <!--Script-->
     <script src="Todo.js"></script>
 </body>
 </html>
