@@ -1,75 +1,48 @@
-var email = document.forms['form']['email'];
+const form = document.querySelector("form");
+eField = form.querySelector(".email"),
+eInput = eField.querySelector("input"),
+pField = form.querySelector(".password"),
+pInput = pField.querySelector("input");
 
-var password = document.forms['form']['password'];
+form.onsubmit = (e)=>{
+  e.preventDefault(); 
+  
+  (eInput.value == "") ? eField.classList.add("shake", "error") : checkEmail();
+  (pInput.value == "") ? pField.classList.add("shake", "error") : checkPass();
 
+  setTimeout(()=>{ 
+    eField.classList.remove("shake");
+    pField.classList.remove("shake");
+  }, 500);
 
+  eInput.onkeyup = ()=>{checkEmail();} 
+  pInput.onkeyup = ()=>{checkPass();} 
 
-var email_error = document.getElementById('email_error');
+  function checkEmail(){ 
+    let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; 
+    if(!eInput.value.match(pattern)){ 
+      eField.classList.add("error");
+      eField.classList.remove("valid");
+      let errorTxt = eField.querySelector(".error-txt");
+      
+      (eInput.value != "") ? errorTxt.innerText = "Enter a valid email address" : errorTxt.innerText = "Email can't be blank";
+    }else{ 
+      eField.classList.remove("error");
+      eField.classList.add("valid");
+    }
+  }
 
-var pass_error = document.getElementById('pass_error');
+  function checkPass(){ 
+    if(pInput.value == ""){ 
+      pField.classList.add("error");
+      pField.classList.remove("valid");
+    }else{ 
+      pField.classList.remove("error");
+      pField.classList.add("valid");
+    }
+  }
 
-
-
-email.addEventListener('textInput', email_Verify);
-
-password.addEventListener('textInput', pass_Verify);
-
-
-
-function validated(){
-
-	if (email.value.length < 9) {
-
-		email.style.border = "1px solid red";
-
-		email_error.style.display = "block";
-
-		email.focus();
-
-		return false;
-
-	}
-
-	if (password.value.length < 6) {
-
-		password.style.border = "1px solid red";
-
-		pass_error.style.display = "block";
-
-		password.focus();
-
-		return false;
-
-	}
-
-
-
-}
-
-function email_Verify(){
-
-	if (email.value.length >= 8) {
-
-		email.style.border = "1px solid silver";
-
-		email_error.style.display = "none";
-
-		return true;
-
-	}
-
-}
-
-function pass_Verify(){
-
-	if (password.value.length >= 5) {
-
-		password.style.border = "1px solid silver";
-
-		pass_error.style.display = "none";
-
-		return true;
-
-	}
-
+  if(!eField.classList.contains("error") && !pField.classList.contains("error")){
+    window.location.href = form.getAttribute("action"); 
+  }
 }
